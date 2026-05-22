@@ -17,7 +17,7 @@ spec:
         - { key: role, operator: Equal, value: edge, effect: NoSchedule }
       containers:
         - name: collections-tree-app
-          image: harbor.e-dani.com/homelab/shopify-collections-tree-app:k8s-20260522-8305a3a
+          image: harbor.lan.e-dani.com/homelab/shopify-collections-tree-app:k8s-20260522-8305a3a-proddeps@sha256:63a776f4af3947e88ba695490cf66440b596265abbc3f4772937c57c97f28cfa
           imagePullPolicy: IfNotPresent
           ports: [{ name: http, containerPort: 3473 }]
           env:
