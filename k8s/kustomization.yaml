@@ -32,6 +32,10 @@ patches:
               - name: app
                 env:
                   - { name: PORT, value: "3473" }
+                  # Override the framework base's generic SCOPES (read_products,write_products):
+                  # as a direct env var it shadows the real scopes from collections-tree-secrets
+                  # (envFrom). Must match k8s/expected-scopes.txt (guarded by scripts/verify-scopes.sh).
+                  - { name: SCOPES, value: "read_products,write_products,read_content,read_themes" }
                   - { name: DEV_MODE, value: "" }
                   - { name: LIVE_BRAIN, value: "" }
                   - { name: LIVE_SHOPIFY_WRITES, value: "" }
