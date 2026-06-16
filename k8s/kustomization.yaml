@@ -14,7 +14,7 @@ labels:
 images:
   - name: shopify-app
     newName: harbor.lan.e-dani.com/homelab/shopify-collections-tree-app
-    digest: sha256:ccc46da54975b93458a1385357815d207252a3cc9ceff34b854c877ac282f7dc
+    digest: sha256:a7b70657ba005af94ec0d7ab61acccca3441d3d9ef5220b2d817fc5bd450e9ae
 
 patches:
   - target: { kind: Deployment, name: app }
