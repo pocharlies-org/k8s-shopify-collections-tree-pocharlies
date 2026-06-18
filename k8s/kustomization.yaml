@@ -14,7 +14,7 @@ labels:
 images:
   - name: shopify-app
     newName: harbor.lan.e-dani.com/homelab/shopify-collections-tree-app
-    digest: sha256:a7b70657ba005af94ec0d7ab61acccca3441d3d9ef5220b2d817fc5bd450e9ae
+    digest: sha256:7711de34fc6dbb566882b20303dfbe53f3b1cdcf3712b2276a95f2973008570c
 
 patches:
   - target: { kind: Deployment, name: app }
@@ -42,6 +42,8 @@ patches:
                   - { name: SHOPIFY_APP_URL, value: "https://skirmshop.e-dani.com/collections-tree" }
                   - { name: STOREFRONT_DOMAIN, value: "www.skirmshop.es" }
                   - { name: BRAIN_URL, value: "http://skirmshop-brain.skirmshop-brain-prod.svc.cluster.local" }
+                  - name: BRAIN_API_KEY
+                    valueFrom: { secretKeyRef: { name: rag-secrets, key: BRAIN_API_KEY } }
                   - { name: LLM_BASE_URL, value: "http://litellm.litellm.svc.cluster.local:4000/v1" }
                   # Override the shared DB name (base default is `skirmshop`).
                   - name: DB_USER
