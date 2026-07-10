@@ -14,7 +14,7 @@ labels:
 images:
   - name: shopify-app
     newName: harbor.lan.e-dani.com/homelab/shopify-collections-tree-app
-    digest: sha256:7953dc678cac6b4892f04cdcc9745a2c56683899aa8b4da81b9068733975824a
+    digest: sha256:f42ec06a2d6f3fe34d84d3a16a1386164fe34ada084d070159d5918c3e0e3a6c
 
 patches:
   - target: { kind: Deployment, name: app }
@@ -54,10 +54,12 @@ patches:
                   - name: DB_PASSWORD
                     valueFrom: { secretKeyRef: { name: shared-postgres-app, key: password } }
                   - { name: DATABASE_URL, value: "postgresql://$(DB_USER):$(DB_PASSWORD)@postgres-shared-rw.databases.svc.cluster.local:5432/collections_tree" }
+                  # Scoped RMQ user (configure/read: events + collections-tree.*;
+                  # write: collections-tree.*) — replaces the broker admin creds.
                   - name: _RMQUSER
-                    valueFrom: { secretKeyRef: { name: rabbitmq-secrets, key: RABBITMQ_DEFAULT_USER } }
+                    valueFrom: { secretKeyRef: { name: collections-tree-rmq, key: username } }
                   - name: _RMQPASS
-                    valueFrom: { secretKeyRef: { name: rabbitmq-secrets, key: RABBITMQ_DEFAULT_PASS } }
+                    valueFrom: { secretKeyRef: { name: collections-tree-rmq, key: password } }
                   - { name: SYNAPSE_AMQP_URL, value: "amqp://$(_RMQUSER):$(_RMQPASS)@shared-rabbitmq.databases.svc.cluster.local:5672/%2Fsynapse" }
                   - { name: SYNAPSE_TENANT, value: "skirmshop" }
                   - { name: SYNAPSE_EVENTS_EXCHANGE, value: "events" }
