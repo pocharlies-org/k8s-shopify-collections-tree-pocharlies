@@ -53,7 +53,14 @@ patches:
                     valueFrom: { secretKeyRef: { name: shared-postgres-app, key: username } }
                   - name: DB_PASSWORD
                     valueFrom: { secretKeyRef: { name: shared-postgres-app, key: password } }
-                  - { name: DATABASE_URL, value: "postgresql://$(DB_USER):$(DB_PASSWORD)@postgres-shared-rw.databases.svc.cluster.local:5432/collections_tree" }
+                  # connection_limit: sin él Prisma dimensiona el pool con
+                  # `cpus_fisicos * 2 + 1` LEIDO DEL HOST, no del límite del
+                  # contenedor. En `sauvage` (48 vCPU, sin cpu limit) eso son ~49
+                  # conexiones por PrismaClient, y el framework instancia uno
+                  # además del de la app → pool efectivo x2. Con 1 réplica y
+                  # ~1 query concurrente, 5 por cliente (10/pod) sobra.
+                  # application_name: trazabilidad en pg_stat_activity.
+                  - { name: DATABASE_URL, value: "postgresql://$(DB_USER):$(DB_PASSWORD)@postgres-shared-rw.databases.svc.cluster.local:5432/collections_tree?connection_limit=5&pool_timeout=15&connect_timeout=10&application_name=collections-tree-app" }
                   # Scoped RMQ user (configure/read: events + collections-tree.*;
                   # write: collections-tree.*) — replaces the broker admin creds.
                   - name: _RMQUSER
