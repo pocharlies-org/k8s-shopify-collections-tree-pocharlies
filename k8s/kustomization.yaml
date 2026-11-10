@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - https://github.com/pocharlies-org/k8s-shopify-framework-pocharlies.git//base?ref=deploy/prod
+  - cronjob-reorder-collections.yaml
 
 namePrefix: collections-tree-
 
