@@ -50,7 +50,8 @@ spec:
                 - node
                 - -e
                 - |
-                  # El framework monta la app bajo el path de SHOPIFY_APP_URL (/collections-tree).
+                  // El framework monta la app bajo el path de SHOPIFY_APP_URL (/collections-tree).
+                  // Ojo: node 22.23 evalúa -e como TS — aquí solo comentarios //, nunca #.
                   const url = 'http://collections-tree-app/collections-tree/api/admin/collections/reorder';
                   const token = process.env.REORDER_API_TOKEN;
                   if (!token) { console.error('REORDER_API_TOKEN missing'); process.exit(1); }
