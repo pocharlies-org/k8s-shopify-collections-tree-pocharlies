@@ -50,7 +50,8 @@ spec:
                 - node
                 - -e
                 - |
-                  const url = 'http://collections-tree-app/api/admin/collections/reorder';
+                  # El framework monta la app bajo el path de SHOPIFY_APP_URL (/collections-tree).
+                  const url = 'http://collections-tree-app/collections-tree/api/admin/collections/reorder';
                   const token = process.env.REORDER_API_TOKEN;
                   if (!token) { console.error('REORDER_API_TOKEN missing'); process.exit(1); }
                   const ctrl = new AbortController();
