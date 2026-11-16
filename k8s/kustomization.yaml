@@ -42,13 +42,12 @@ patches:
                   # (envFrom). Must match k8s/expected-scopes.txt (guarded by scripts/verify-scopes.sh).
                   - { name: SCOPES, value: "read_products,write_products,read_content,read_themes" }
                   - { name: DEV_MODE, value: "" }
-                  - { name: LIVE_BRAIN, value: "" }
+                  # SC-5827: el Brain se retiró; el gate del stub de DEV_MODE pasó a LIVE_LLM
+                  # (controla solo el chat de LiteLLM, antes LIVE_BRAIN).
+                  - { name: LIVE_LLM, value: "" }
                   - { name: LIVE_SHOPIFY_WRITES, value: "" }
                   - { name: SHOPIFY_APP_URL, value: "https://skirmshop.e-dani.com/collections-tree" }
                   - { name: STOREFRONT_DOMAIN, value: "www.skirmshop.es" }
-                  - { name: BRAIN_URL, value: "http://skirmshop-brain.skirmshop-brain-prod.svc.cluster.local" }
-                  - name: BRAIN_API_KEY
-                    valueFrom: { secretKeyRef: { name: rag-secrets, key: BRAIN_API_KEY } }
                   - { name: LLM_BASE_URL, value: "http://litellm.litellm.svc.cluster.local:4000/v1" }
                   # Override the shared DB name (base default is `skirmshop`).
                   - name: DB_USER
