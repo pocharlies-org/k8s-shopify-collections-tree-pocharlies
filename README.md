@@ -11,7 +11,7 @@ legacy Sauvage localhost route on port `3473`.
 - Service: `collections-tree-app`
 - Public path: `skirmshop.e-dani.com/collections-tree`
 - Database: `collections_tree` on `postgres-shared-rw.databases.svc.cluster.local`
-- Brain: `skirmshop-brain.skirmshop-brain-prod.svc.cluster.local`
+- LiteLLM (nombrado de clusters): `litellm.litellm.svc.cluster.local:4000/v1`. El Brain se retiró en SC-5827: sin `BRAIN_URL` ni `BRAIN_API_KEY`.
 - Shopify events: `shared-rabbitmq.databases.svc.cluster.local`, vhost `/synapse`
 
 ## Secrets
